@@ -1,0 +1,38 @@
+{
+  "name": "weather-service",
+  "author": "Evan Bechtol <evanbechtol@gmail.com>",
+  "version": "1.1.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint -c .eslintrc.json ./* --ext .js",
+    "test": "mocha test/* --reporter spec",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evanbechtol/weather-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evanbechtol/weather-service/issues"
+  },
+  "homepage": "https://github.com/evanbechtol/weather-service#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "express": "^4.16.1",
+    "mongoose": "^5.4.14",
+    "morgan": "^1.9.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.15.3",
+    "eslint-plugin-node": "^8.0.1",
+    "mocha": "^6.1.4",
+    "nyc": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  }
+}
