@@ -7,7 +7,7 @@ const config = require( "../config" );
 
 describe( "Weather Service", () => {
   const WeatherService = require( "../services/WeatherService" );
-  const WeatherServiceInstance = new WeatherService( config.weatherApi );
+  const WeatherServiceInstance = new WeatherService( config.weatherApi, config.weatherApiKey );
 
   it( "Should initialize an instance of the weather service", () => {
     expect( WeatherServiceInstance ).to.be.an.instanceOf( WeatherService );
@@ -32,12 +32,12 @@ describe( "Weather Service", () => {
         expect( WeatherServiceInstance ).itself.to.respondTo( "getWeather" );
       } );
 
+      let weatherResponse =
       it( "Should return an object", async () => {
         const latitude = "32.8998";
         const longitude = "97.0403";
-        const response = await WeatherServiceInstance.getWeather( latitude, longitude );
-        console.log(response);
-        assert.isObject(response);
+        weatherResponse = await WeatherServiceInstance.getWeather( latitude, longitude );
+        assert.isObject(weatherResponse);
       } );
     } );
   } );
