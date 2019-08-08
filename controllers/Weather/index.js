@@ -21,6 +21,16 @@ async function getForecast ( req, res ) {
   }
 }
 
-function getWeather ( req, res ) {
+async function getWeather ( req, res ) {
+  try {
+    const WeatherResponse = await WeatherServiceInstance.getWeather( req.weatherParams );
 
+    if (!WeatherResponse) {
+      return res.status( 404 ).send();
+    }
+
+    return res.status( WeatherResponse.cod ).send( WeatherResponse );
+  } catch( err ) {
+    return res.status( err.cod ).send( err );
+  }
 }
