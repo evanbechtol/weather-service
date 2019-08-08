@@ -12,11 +12,11 @@ class WeatherService extends ApiService {
    * lon, zip code
    */
   async getWeather ( params ) {
-    const requestOptions = {
+    const RequestOptions = {
       url: `https://${this.getApi()}/weather?${params}&APPID=${this.apiKey}`,
       method: "GET"
     };
-    return await this.makeRequest( requestOptions );
+    return await this.makeRequest( RequestOptions );
   }
 
   /**
@@ -25,11 +25,11 @@ class WeatherService extends ApiService {
    * lon, zip code
    */
   async getForecast ( params ) {
-    const requestOptions = {
+    const RequestOptions = {
       url: `https://${this.getApi()}/forecast?${params}&APPID=${this.apiKey}`,
       method: "GET"
     };
-    return await this.makeRequest( requestOptions );
+    return await this.makeRequest( RequestOptions );
   }
 }
 
