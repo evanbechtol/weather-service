@@ -1,4 +1,4 @@
-const template = require( "./routes-template" );
+const WeatherRoutes = require( "./weather" );
 
 const routes = app => {
   app.use( ( req, res, next ) => {
@@ -16,7 +16,7 @@ const routes = app => {
     next();
   } );
 
-  app.use( "/", template );
+  app.use( "/", WeatherRoutes );
 };
 
 module.exports = routes;
