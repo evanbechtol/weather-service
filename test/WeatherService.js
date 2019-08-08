@@ -32,12 +32,27 @@ describe( "Weather Service", () => {
         expect( WeatherServiceInstance ).itself.to.respondTo( "getWeather" );
       } );
 
-      let weatherResponse =
+      let weatherResponse;
+
       it( "Should return an object", async () => {
         const latitude = "32.8998";
         const longitude = "97.0403";
         weatherResponse = await WeatherServiceInstance.getWeather( latitude, longitude );
         assert.isObject(weatherResponse);
+      } );
+
+      describe( "Response should have keys", () => {
+        it( "coord", () => {
+          assert.property( weatherResponse, "coord" );
+        } );
+
+        it( "weather", () => {
+          assert.property( weatherResponse, "weather" );
+        } );
+
+        it( "name", () => {
+          assert.property( weatherResponse, "name" );
+        } );
       } );
     } );
   } );
