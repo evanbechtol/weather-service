@@ -14,7 +14,7 @@ class ApiService {
     this._api = api;
   }
 
-  async makeRequest ( options ) {
+  makeRequest ( options ) {
     return new Promise( (resolve, reject ) => {
       request(options, ( err, response, body ) => {
         if ( err ) {
