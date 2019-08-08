@@ -1,9 +1,16 @@
 const express = require( 'express' );
 const router = express.Router();
 const WeatherController = require( "../../controllers/Weather" );
+const WeatherValidator = require( "../../middlewares/validators/Weather" );
 
-router.get( '/weather', WeatherController.getWeather );
+router.get( '/weather',
+  WeatherValidator.checkForParams,
+  WeatherController.getWeather
+);
 
-router.get( '/forecast', WeatherController.getForecast );
+router.get( '/forecast',
+  WeatherValidator.checkForParams,
+  WeatherController.getForecast
+);
 
 module.exports = router;
