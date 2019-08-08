@@ -1,13 +1,13 @@
-const chai = require( "chai" );
-const assert = chai.assert;
-const expect = chai.expect;
+const assert = require( "chai" ).assert;
+const expect = require( "chai" ).expect;
 const mocha = require( "mocha" );
 const describe = mocha.describe;
 const it = mocha.it;
+const config = require( "../config" );
 
 describe( "Weather Service", () => {
   const WeatherService = require( "../services/WeatherService" );
-  const WeatherServiceInstance = new WeatherService();
+  const WeatherServiceInstance = new WeatherService( config.weatherApi );
 
   it( "Should initialize an instance of the weather service", () => {
     expect( WeatherServiceInstance ).to.be.an.instanceOf( WeatherService );
@@ -15,14 +15,29 @@ describe( "Weather Service", () => {
 
   describe( "Check methods", () => {
 
-    describe( "Method getWeather", () => {
+    describe( "Method getApi", () => {
+      it( "Should have method", () => {
+        expect( WeatherServiceInstance ).itself.to.respondTo( "getApi" );
+      } );
+    } );
 
+    describe( "Method setApi", () => {
+      it( "Should have method", () => {
+        expect( WeatherServiceInstance ).itself.to.respondTo( "setApi" );
+      } );
+    } );
+
+    describe( "Method getWeather", () => {
       it( "Should have method", () => {
         expect( WeatherServiceInstance ).itself.to.respondTo( "getWeather" );
       } );
 
-      it( "Should return an object", () => {
-
+      it( "Should return an object", async () => {
+        const latitude = "32.8998";
+        const longitude = "97.0403";
+        const response = await WeatherServiceInstance.getWeather( latitude, longitude );
+        console.log(response);
+        assert.isObject(response);
       } );
     } );
   } );

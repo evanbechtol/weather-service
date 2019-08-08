@@ -1,26 +1,16 @@
+// Create express instance to setup API
+const ExpressLoader = require( "./loaders/Express" );
+new ExpressLoader();
+
 const config = require( "./config" );
-const mongoose = require( "mongoose" );
-const logger = require( "./services/Logger" );
+const WeatherService = require( "./services/WeatherService" );
+const WeatherServiceInstance = new WeatherService( config.weatherApi, config.weatherApiKey );
 
-const mongooseOptions = {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  autoReconnect: true
-};
+const latitude = "32.8998";
+const longitude = "-96.80667";
 
-mongoose.Promise = global.Promise;
-
-// Connect to the DB an initialize the app if successful
-mongoose.connect( config.dbUrl, mongooseOptions )
-  .then( () => {
-    logger.info( "Database connection successful" );
-
-    // Create express instance to setup API
-    const ExpressLoader = require( "./loaders/Express" );
-    new ExpressLoader();
-  } )
-  .catch( err => {
-    //eslint-disable-next-line
-    console.error( err );
-    logger.error( err );
-  } );
+async function callApi() {
+  return await WeatherServiceInstance.getWeather(latitude, longitude);
+}
+const response = callApi();
+console.log( response );

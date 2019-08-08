@@ -6,7 +6,9 @@ const config = {
   key: process.env.KEY,
   logDir: process.env.LOGDIR || "logs",
   port: process.env.PORT || 3000,
-  viewEngine: process.env.VIEW_ENGINE || "html"
+  viewEngine: process.env.VIEW_ENGINE || "html",
+  weatherApi: process.env.WEATHER_API || "api.openweathermap.org/data/2.5",
+  weatherApiKey: process.env.WEATHER_API_KEY
 };
 
 module.exports = config;
