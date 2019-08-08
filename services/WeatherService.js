@@ -8,14 +8,25 @@ class WeatherService extends ApiService {
 
   /**
    * @description Retrieve the weather for the latitude and longitude provided
-   * @param latitude {string} Latitude in range of -90 to 90
-   * @param longitude {string} Longitude in range of -180 to 180
+   * @param params {string} Querystring parameters to pass to API; lat &
+   * lon, zip code
    */
-  async getWeather ( latitude, longitude ) {
-    //Todo: Check that provided lat and long are numbers
-    //Todo: Check that provided lat and long are in acceptable ranges
+  async getWeather ( params ) {
     const requestOptions = {
-      url: `https://${this.getApi()}/weather?lat=${latitude}&lon=${longitude}&APPID=${this.apiKey}`,
+      url: `https://${this.getApi()}/weather?${params}&APPID=${this.apiKey}`,
+      method: "GET"
+    };
+    return await this.makeRequest( requestOptions );
+  }
+
+  /**
+   * @description Retrieve the forecast for the latitude and longitude provided
+   * @param params {string} Querystring parameters to pass to API; lat &
+   * lon, zip code
+   */
+  async getForecast ( params ) {
+    const requestOptions = {
+      url: `https://${this.getApi()}/forecast?${params}&APPID=${this.apiKey}`,
       method: "GET"
     };
     return await this.makeRequest( requestOptions );

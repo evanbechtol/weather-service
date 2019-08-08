@@ -7,6 +7,10 @@ const config = require( "../config" );
 describe( "Weather Service", () => {
   const WeatherService = require( "../services/WeatherService" );
   const WeatherServiceInstance = new WeatherService( config.weatherApi, config.weatherApiKey );
+  const Params = {
+    latAndLon: "lat=32.8998&lon=-96.80667",
+    zipAndCountryCode: "zip=75023,us"
+  };
 
   it( "Should initialize an instance of the weather service", () => {
     assert.instanceOf( WeatherServiceInstance, WeatherService );
@@ -17,6 +21,10 @@ describe( "Weather Service", () => {
     describe( "Method getApi", () => {
       it( "Should have method", () => {
         assert.isFunction( WeatherServiceInstance.getApi );
+      } );
+
+      it( "Should return a string", () => {
+        assert.isString( WeatherServiceInstance.getApi() );
       } );
     } );
 
@@ -37,29 +45,211 @@ describe( "Weather Service", () => {
         assert.isFunction( WeatherServiceInstance.getWeather );
       } );
 
-      let weatherResponse;
-
-      it( "Should return an object", async () => {
-        const latitude = "32.8998";
-        const longitude = "97.0403";
-        weatherResponse = await WeatherServiceInstance.getWeather( latitude, longitude );
-        assert.isObject( weatherResponse );
+      describe( "Using lat and lon", () => {
+        testGetWeather( WeatherServiceInstance, Params.latAndLon );
       } );
 
-      describe( "Response should have keys", () => {
-        it( "coord", () => {
-          assert.property( weatherResponse, "coord" );
-        } );
+      describe( "Using zip and country code", () => {
+        testGetWeather( WeatherServiceInstance, Params.zipAndCountryCode );
+      } );
+    } );
 
-        it( "weather", () => {
-          assert.property( weatherResponse, "weather" );
-        } );
+    describe( "Method getForecast", () => {
+      it( "Should have method", () => {
+        assert.isFunction( WeatherServiceInstance.getForecast );
+      } );
 
-        it( "name", () => {
-          assert.property( weatherResponse, "name" );
-        } );
+      describe( "Using lat and lon", () => {
+        testGetForecast( WeatherServiceInstance, Params.latAndLon );
+      } );
+
+      describe( "Using zip and country code", () => {
+        testGetForecast( WeatherServiceInstance, Params.zipAndCountryCode );
       } );
     } );
   } );
-
 } );
+
+function testGetWeather ( WeatherServiceInstance, params ) {
+  let weatherResponse;
+
+  it( "Should return an object", async () => {
+    weatherResponse = await WeatherServiceInstance.getWeather( params );
+    assert.isObject( weatherResponse );
+  } );
+
+  describe( "Response should have keys", () => {
+    describe( "coord", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "coord" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.coord );
+      } );
+    } );
+
+    describe( "weather", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "weather" );
+      } );
+
+      it( "Is array", () => {
+        assert.isArray( weatherResponse.weather );
+      } );
+    } );
+
+    describe( "main", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "main" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.main );
+      } );
+    } );
+
+    describe( "wind", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "wind" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.wind );
+      } );
+    } );
+
+
+    describe( "clouds", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "clouds" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.clouds );
+      } );
+    } );
+
+    describe( "dt", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "dt" );
+      } );
+
+      it( "Is number", () => {
+        assert.isNumber( weatherResponse.dt );
+      } );
+    } );
+
+    describe( "sys", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "sys" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.sys );
+      } );
+    } );
+
+    describe( "name", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "name" );
+      } );
+
+      it( "Is string", () => {
+        assert.isString( weatherResponse.name );
+      } );
+    } );
+  } );
+}
+
+function testGetForecast ( WeatherServiceInstance, params ) {
+  let weatherResponse;
+
+  it( "Should return an object", async () => {
+    weatherResponse = await WeatherServiceInstance.getWeather( params );
+    assert.isObject( weatherResponse );
+  } );
+
+  describe( "Response should have keys", () => {
+    describe( "coord", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "coord" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.coord );
+      } );
+    } );
+
+    describe( "weather", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "weather" );
+      } );
+
+      it( "Is array", () => {
+        assert.isArray( weatherResponse.weather );
+      } );
+    } );
+
+    describe( "main", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "main" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.main );
+      } );
+    } );
+
+    describe( "wind", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "wind" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.wind );
+      } );
+    } );
+
+
+    describe( "clouds", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "clouds" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.clouds );
+      } );
+    } );
+
+    describe( "dt", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "dt" );
+      } );
+
+      it( "Is number", () => {
+        assert.isNumber( weatherResponse.dt );
+      } );
+    } );
+
+    describe( "sys", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "sys" );
+      } );
+
+      it( "Is object", () => {
+        assert.isObject( weatherResponse.sys );
+      } );
+    } );
+
+    describe( "name", () => {
+      it( "Key exists", () => {
+        assert.property( weatherResponse, "name" );
+      } );
+
+      it( "Is string", () => {
+        assert.isString( weatherResponse.name );
+      } );
+    } );
+  } );
+}
